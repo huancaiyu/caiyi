@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/3.2.26/vue.global.min.js"></script>
+<link rel="shortcut icon" href="E:/系统自带消耗内存/桌面/colorful-wings/tupian/xnyg.png">
+<title>&#x2B50;翼妹&#x2B50;</title>
+<script></script>
+<style>
+button{background-color:rgba(255, 215, 0, 0.8);border:2px solid rgba(255, 215, 0, 0.8);color:white};
+* {box-sizing: border-box;}
+#cs select{border:2px solid rgba(255, 215, 0, 0.8);background-color:rgba(188, 107, 234, 0.8);color:white;height:24px;width:100px;}/*导航*/#daohang ul{list-style-type: none;margin: 0;padding: 0;overflow: hidden;background-color: #9bc8eb; }#daohang li{background-color:aqua;padding:10px;display:inline-block;float:left;}#daohang li a{text-decoration: none;font-size: 16px;color:rgb(185, 209, 251)}#daohang li a:hover{color:deeppink}#daohang li:last-child {float: right; }
+</style>
+</head>
+<body>
+<!--导航--><div id="daohang"><ul><li><a href="index.html">主页</a></li><li><a href="游戏.html">游戏</a></li><li><a href="月抛.html">月抛</a></li><li><a href="网站使用教程.html">网站使用教程</a></li><li><a href="听歌.html">听歌</a></li><li><a href="">用户</a></li></ul></div>
+<div id="cs">
+<select v-model="songType">
+    <option value="">选择歌类型</option>
+    <option value="学园偶像大师">学园偶像大师</option>
+    <option value="pjsk">pjsk</option>
+    <option value="d4dj">d4dj</option>
+</select>
+<button  @click="bofang()">开始/暂停</button>
+<button v-if="currentshuzu.length>0&&i>0" @click="shangyishou()">上一首</button>
+<button v-if="currentshuzu.length>0&&currentshuzu.length>i+1" @click="xiayishou()">下一首</button>
+<!--学园添加部分--><audio id="yinyuexueyuan"><source src="学园偶像初星学园.mp3" type="audio/mp3"><source src="学园偶像大师 花海咲季 古今东西.mp3" type="audio/mp3"><source src="学园偶像大师 花海咲季 BoomBoomPow.mp3" type="audio/mp3"><source src="学园偶像大师 琴音 变装狂欢曲.mp3" type="audio/mp3"><source src="学园偶像大师 琴音 世界第一可爱.mp3" type="audio/mp3"><source src="学园偶像大师 十王星南 Choo Choo Choo.mp3" type="audio/mp3"></audio>
+<!--pjsk添加部分--><audio id="yinyuepjsk"><source src="pjsk 39みゆじく.mp3" type="audio/mp3"><source src="pjsk 独りんぼエンウィー.mp3" type="audio/mp3"><source src="pjsk 海百合海底谭.mp3" type="audio/mp3"></audio>
+<!--d4dj添加部分--><audio id="yinyued4dj"><source src="D4DJ 光.mp3" type="audio/mp3"><source src="D4DJ 水茎あやめの話.mp3" type="audio/mp3"><source src="D4DJ Fake off.mp3" type="audio/mp3"><source src="D4DJ happy around.mp3" type="audio/mp3"><source src="D4DJ Peaky.mp3" type="audio/mp3"><source src="D4DJ WOWWAR.mp3" type="audio/mp3"><source src="d4dj主页音乐.mp3" type="audio/mp3"><source src="D4DJHere is night.mp3" type="audio/mp3"></audio>
+<!--bang添加部分--><audio id="yinyuebang"><source src="bang 独创收差.mp3" type="audio/mp3"><source src="bang 两翼のBrilliance.mp3" type="audio/mp3"><source src="bang 誓いのWingbeat.mp3" type="audio/mp3"><source src="bang 壱雫空.mp3" type="audio/mp3"><source src="bang 最高（さあ行こう）.mp3" type="audio/mp3"><source src="bang black shout.mp3" type="audio/mp3"><source src="bang dreamers go.mp3" type="audio/mp3"><source src="bang Fateful.mp3" type="audio/mp3"><source src="bang HEROIC ADVENT.mp3" type="audio/mp3"><source src="bang Hey-day狂骚曲(カプりチオ).mp3" type="audio/mp3"><source src="bang hhw-ぼなぺてい.mp3" type="audio/mp3"><source src="bang ppp-いんとろ.mp3" type="audio/mp3"><source src="bang ppp-ていあどろ破琵琶神曲.mp3" type="audio/mp3"><source src="bang r-R.mp3" type="audio/mp3"><source src="bang ras-coruscate.mp3" type="audio/mp3"><source src="bang Takin my heart.mp3" type="audio/mp3"><source src="bang Time Lapse.mp3" type="audio/mp3"><source src="bang ときめきエケスべりエンス！.mp3" type="audio/mp3"><source src="bang ゆらゆらRing-Dong-Dance.mp3" type="audio/mp3"><source src="bang ろみおとじんでしら.mp3" type="audio/mp3"></audio>
+</div>
+<!--音乐vue--><script>const { createApp } = Vue;const app = createApp({data() {return {songType: '',i: 0,currentshuzu: [] }},methods: {bofang() {const shuzuxueyuan = Array.from(document.querySelectorAll('audio#yinyuexueyuan source')).map(source => source.src);const shuzubang = Array.from(document.querySelectorAll('audio#yinyuebang source')).map(source => source.src);const shuzupjsk = Array.from(document.querySelectorAll('audio#yinyuepjsk source')).map(source => source.src);const shuzud4dj = Array.from(document.querySelectorAll('audio#yinyued4dj source')).map(source => source.src);let bfyinyue = null;if (this.songType === '学园偶像大师') {this.currentshuzu = shuzuxueyuan;bfyinyue = document.getElementById('yinyuexueyuan');} else if (this.songType === 'pjsk') {this.currentshuzu = shuzupjsk;bfyinyue = document.getElementById('yinyuepjsk');} else if (this.songType === 'd4dj') {this.currentshuzu = shuzud4dj;bfyinyue = document.getElementById('yinyued4dj');}else if (this.songType === 'bang') {this.currentshuzu = shuzubang;bfyinyue = document.getElementById('yinyuebang');} else {this.currentshuzu = [];}if (this.currentshuzu.length > 0) {if (bfyinyue.paused || bfyinyue.src !== this.currentshuzu[this.i]) {bfyinyue.src = this.currentshuzu[this.i];bfyinyue.play();} else {bfyinyue.pause();}}},shangyishou() {if (this.i > 0) {this.i--;this.bofang();}},xiayishou() {if (this.i < this.currentshuzu.length - 1) {this.i++;this.bofang();}}}}).mount('#cs')</script>
+</body>
+</html>
+
+<!--添加部分-->
+<source src="" type="audio/mp3">
